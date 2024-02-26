@@ -1,0 +1,30 @@
+// Define syntax for Protocol Buffers version 3
+syntax = "proto3";
+
+// Define a message for representing null values
+message Null {}
+
+// Define a message for representing a ticket with a name, description, and story points
+// In Protocol Buffers, field tags must be numeric values. 
+// They are used to uniquely identify each field within a message. 
+// These tags are used for serialization and deserialization purposes, 
+// and they need to be numeric for efficient encoding and decoding.
+message Ticket {
+    string name = 1;          // Name of the ticket
+    string description = 2;   // Description of the ticket
+    uint32 story_points = 3;  // Story points of the ticket
+}
+
+// Define a message for representing a confirmation with an expected deadline
+message Confirmation {
+    string expected_deadline = 1;  // Expected deadline of the task
+}
+
+// Define a gRPC service named TestService
+service TestService {
+    // RPC method to check the health of the service
+    rpc Health(Null) returns (Null);
+
+    // RPC method to add a new ticket and return a confirmation
+    rpc AddTicket(Ticket) returns (Confirmation);
+}
